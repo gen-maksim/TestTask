@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProjectCreated;
+use App\User;
 use Illuminate\Http\Request;
 use \App\Project;
 
@@ -16,15 +18,25 @@ class ProjectsController extends Controller
 
     public function index()
     {
-//        dd(auth()->id());
-        $projects = Project::all()->filter(function($proj) { return $proj->user_id == auth()->id(); });
+        $projects = auth()->user()->projects;
 
         return view('projects.index', compact('projects'));
 
     }
 
+    //TODO: move refresh to it's own controller (e.x. api/projectsController)
+    public function refresh()
+    {
+        $projects = auth()->user()->projects;
+
+        return compact('projects');
+
+    }
+
     public function show(Project $project)
     {
+        $this->authorize('view',$project);
+
         return view('projects.show', compact('project'));
     }
 
@@ -49,6 +61,7 @@ class ProjectsController extends Controller
 
     public function create()
     {
+
         return view('projects.create');
     }
 
@@ -59,8 +72,9 @@ class ProjectsController extends Controller
             'description' => ['required', 'min:3']
         ]);
 
-        $attributes['user_id'] = auth()->id();
-        Project::create($attributes);
+        $project = auth()->user()->createProject($attributes);
+
+        event(new ProjectCreated($project));
 
         return redirect(route('projects.index'));
     }

@@ -66,6 +66,7 @@ section {
 
 body {
   margin: 0;
+  height: 400px;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
@@ -286,7 +287,6 @@ button::-moz-focus-inner,
 [type=reset]::-moz-focus-inner,
 [type=submit]::-moz-focus-inner {
   padding: 0;
-  color: #1d68a7;
   border-style: none;
 }
 

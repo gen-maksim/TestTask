@@ -2,13 +2,15 @@
 
 @section('content')
 
-    <h1 class="title">{{ $project->title }}</h1>
+    <div class="h1 text-center  ">Project: {{ $project->title }}
+        <small class="text-muted">made by {{ $project->user->name }}</small>
+    </div>
 
+    <p class="lead">{{ $project->description }}</p>
 
-    <div class="content">Made by:{{ $project->user->name }}</div>
-
-    <div class="content">{{ $project->description }}</div>
-
-    <a href="{{ route('projects.edit', $project->id) }}">Edit</a>
-
+    @can('view', $project)
+        <form class="d-flex" action="{{ route('projects.edit', $project->id) }}">
+            <input class="btn btn-primary" type="submit" value="Edit" />
+        </form>
+    @endcan
 @endsection

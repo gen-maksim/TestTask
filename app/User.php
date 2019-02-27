@@ -28,8 +28,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function project()
+    public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function createProject($attributes)
+    {
+        $attributes['user_id'] = $this->id;
+
+        return Project::create($attributes);
     }
 }

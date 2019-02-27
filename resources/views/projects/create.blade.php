@@ -5,35 +5,31 @@
 
 @section('content')
 
-    <div class="title m-b-md">
-        Projects
+
+    <div class="row">
+        <h2>Projects</h2>
     </div>
-    <form method="post" action="{{ route('projects.store') }}">
 
-        {{ csrf_field() }}
+    <div class="row">
+        <form class="justify-content-center" method="POST" action='{{ route('projects.store') }}'>
 
-        <div>
-            <input type="text" name="title" required placeholder="Your title" value="{{ old('title') }}">
-        </div>
+            {{ csrf_field() }}
 
-        <div>
-            <textarea name="description"  placeholder="Your descr">{{ old('decryption') }}</textarea>
-        </div>
-
-        <div>
-            <button type="submit">Create Proj</button>
-        </div>
-
-        @if($errors->any())
-            <div >
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="form-group">
+                <input type="text" class="form-control" name="title" placeholder="Your title" value="">
             </div>
-        @endif
 
-    </form>
+            <div class="form-group">
+                <textarea name="description" class="form-control" placeholder="Your descr"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Save Project</button>
+            </div>
+
+        </form>
+    </div>
+
+
 
 @endsection
